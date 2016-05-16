@@ -46,26 +46,33 @@ function create() {
 // Affichage du nom du joueur à l'écran
 
     var text = "nom du joueur : " + player;
-    var style = { font: "65px Arial", fill: "#ff0044", align: "center" };
+    var style = { fill: "#F5F5F5", align: "center" };
     var t = game.add.text(game.world.centerX-300, 10, text, style);
 
 // Afficahe du nom de la ville à l'écran 
 
     var text1 = "ville : " + city;
-    var style1 = { font: "65px Arial", fill: "#ff0044", align: "center" };
-    var t1 = game.add.text(game.world.centerX-300, 80, text1, style1);
+    var style1 = { fill: "#F5F5F5", align: "center" };
+    var t1 = game.add.text(game.world.centerX-300, 50, text1, style1);
 
 
-// Paramétrage de l'horloge 
+// Affiche  de l'horloge 
 
-    var style = { fill : "#FFFFFF" };
-    timeText = game.add.text(50, 150, timeString, style);
+    var style = { fill : "#F5F5F5" };
+    timeText = game.add.text(40, 100, timeString, style);
+
+// paramétrage de l'horloge
 
     var timer = game.time.create();
     timer.repeat(1 * Phaser.Timer.SECOND, 7200, updateTime, this);
     timer.start();
 
 
+
+// Affichage du budget de départ à l'écran
+
+    var style = { fill : "#F5F5F5" };
+    var budget = game.add.text(450, 10, "Budget de depart " + a + "$", style);
 
 
 
