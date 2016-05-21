@@ -8,3 +8,14 @@ Ajout batiments - BinouX : (non fini)
 	Lits des listeners comme le clic droit et le pavé numérique comme raccourci à la couleurs.
 ( Je suis parti sur un tuto de base pour crééer une sorte de Paint, pour pouvoir le modifié ensuite 
 en une carte avec des coordonnées)
+
+
+***************************************************************************
+********************************21/05/2016*********************************
+***************************************************************************
+Suppression Ajout batiments - BinouX : Inutilisatble
+
+viewTile.js - Binoux :
+	Création de la map tile format 3200*3200
+	Création  des tiles de la map avec affichage grace au curseur
+	Camera gerer grace au clavier et à la souris
