@@ -1,0 +1,164 @@
+@charset "UTF-8";
+
+body{
+    background-color: #b3e5fc;
+    color: #E3F2FD;
+    text-align: center;
+}
+
+body > *{
+    text-align: left;
+}
+
+.body-homepage{
+    display: inline-block;
+    width: 990px;
+    border: 5px solid;
+    border-color: #5C798E;
+    border-radius: 5px;
+}
+
+.header-homepage{
+    background-color: green;
+    margin-bottom: 4.5px;
+}
+
+.image-header{
+    position: relative;
+    display: inline-block;
+    background-color: darkcyan;
+}
+
+.form-connection{
+    position: relative;
+    display: inline-block;
+    background-color: violet;
+}
+
+.nav-homepage{
+    background-color: yellow;
+    margin-bottom: 4.5px;
+}
+
+.main-homepage{
+    display: inline-block;
+    width: 990px;
+}
+
+.table-table{
+    display: table;
+    background-color: #42A5F5;
+    border-radius: 5px;
+   /* padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right:10px;
+    border: 3px solid;*/
+}
+
+.table-row{
+    display: table-row;
+}
+
+.form-inscription{
+    display: table-cell;
+    width: 150px;
+    background-color: aquamarine;
+    background-color: #42A5F5;
+    border-radius: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 3px solid;
+}
+
+.lorem-ipsum-homepage{
+    display: table-cell;
+    width: 630px;
+    background-color: #42A5F5;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 3px solid;
+}
+
+.image-main{
+    display: table-cell;
+    vertical-align: middle;
+    background-color: #42A5F5;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 3px solid;
+}
+
+.img-main-homepage{
+    height: 210px;
+    width: 210px;
+}
+
+.footer-homepage{
+    background-color: black;
+}
+
+a{
+    position: relative;
+    z-index: 2;
+    background-color: #81d4fa;
+    display: inline-block;
+    text-decoration: none;  
+    text-align: center;
+    opacity: 0.75;
+    background-color: #42A5F5;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right:10px;
+    border: 3px solid;
+}
+
+
+nav a{
+    width: 25%;
+    font-size: 16px;
+}
+
+footer a{
+    width: 15%;
+    font-size: 12px;
+}
+
+a:visited{
+    text-decoration: none;
+    color: #E3F2FD;
+}
+
+a:hover{
+    text-decoration: none;
+    opacity: 1;
+}
+
+/*nav a:hover{
+    font-size: 18px;
+    font-weight: 900;
+}
+
+footer a:hover{
+    font-size: 11px;
+    font-weight: 900;
+}*/
+
