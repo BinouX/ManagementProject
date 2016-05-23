@@ -19,3 +19,11 @@ viewTile.js - Binoux :
 	Création de la map tile format 3200*3200
 	Création  des tiles de la map avec affichage grace au curseur
 	Camera gerer grace au clavier et à la souris
+
+***************************************************************************
+********************************23/05/2016*********************************
+***************************************************************************
+viewTile.js - BinouX:
+	Mise en place de l'interface avec le menu a droite
+	Mise en place d'une tile en bas a gauche pour l'heure et le budget.
+Erreur: destroy text, affichage en chaine sur la meme zone texte
