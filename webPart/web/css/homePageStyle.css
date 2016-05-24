@@ -1,0 +1,184 @@
+@charset "UTF-8";
+
+* {
+        font-family: 'Lato', sans-serif;
+    }
+    
+body{
+    background-color: transparent;
+    color: black;
+    text-align: center;
+    margin: 0;
+    background-image: url(../assets/wallpaper-3d.jpg);
+    width: auto;
+    z-index: 1;
+}
+
+body > *{
+    text-align: left;
+}
+
+    .body-homepage{
+          display: inline-block;
+          width: 1000px;
+          border: 5px solid;
+          border-color: #8A6D3B;
+          border-radius: 5px;
+    }
+
+    .header-homepage{
+          background-color: tansparent;
+          margin-bottom: 4.5px;
+    }
+
+    .image-header{
+          position: relative;
+          background-color: tansparent;
+    }
+    
+    .image-header img{
+          position: relative;
+          float: left;
+          background-color: tansparent;
+          width:100px;
+          border-radius:10px;
+          padding:5px 15px 5px 15px;
+    }
+    
+    .form-connection{
+          display: inline-block;
+          background-color: #e7e7e7;
+          font-size:14px;
+          border-radius:5px;
+          padding: 10px 128px 5px 15px;
+          margin-top:15px;
+          margin-bottom:15px;
+          margin-left:20px;
+    }
+
+    .title-header{
+          text-align:center;
+          font-size:24px;
+          color:brown;
+          font-weight:bold;
+          padding:12px 5px 8px 15px;
+          border:2px solid black;
+          border-radius: 5px;
+          background-color:#8080ff;
+          width:100%;
+    }
+
+    .nav-homepage{
+          background-color: transparent;
+          margin-top: 15px;
+          margin-bottom: 20px;
+          margin-left:75px;
+    }
+    
+    .nav-homepage a{
+          background-color: #dddd00;
+          margin-bottom: 10px;
+          color:#ff0080;
+          font-weight:bold;
+    }
+    
+    .main-homepage{
+          display: inline-block;
+          width: 990px;
+    }
+
+    .table-table{
+          display: table;
+          background-color: transparent;
+          border-radius: 5px;
+    }
+
+    .table-row{
+          display: table-row;
+    }
+
+    .form-inscription{
+          display: table-cell;
+          width: 150px;
+    }
+
+    .form-inscription form{
+          background-color: #e7e7e7;
+          border-radius: 10px;
+          padding: 10px 15px 15px 15px;
+          border: 1px solid;
+          color:#400000;
+     }
+
+     .lorem-ipsum-homepage{
+          display: table-cell;
+          width: 750px;
+          background-color: transparent;
+          border-radius: 10px;
+          padding: 5px 10px 5px 10px;
+          border: 2px solid;
+     }
+
+     .image-main{
+          display: table-cell;
+          vertical-align: middle;
+     }
+
+     .image-main img{
+          background-color: transparent;
+          border-radius: 10px;
+          padding : 1px 1px 1px 1px;
+          border: 2px solid;
+     }
+
+     .img-main-homepage{
+          height: 210px;
+          width: 200px;
+     }
+
+     .footer-homepage{
+          background-color:transparent;
+     }
+
+a{
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+    text-align: center;
+    opacity: 0.75;
+    border-radius: 3px;
+    padding: 5px 10px 5px 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right:10px;
+    border: 3px solid;
+}
+
+nav a{
+    width: 25%;
+    font-size: 16px;
+}
+
+footer a{
+    width: 15%;
+    font-size: 14px;
+    margin-left:30px;
+    background-color: #dddd00;
+    color:#ff0080;
+}
+
+a:visited {
+    text-decoration: none;
+    color:#ff0080;
+}
+
+a:hover{
+    text-decoration: none;
+    opacity: 1;
+}
+
+footer a:hover{
+    font-size: 11px;
+    font-weight: 900;
+}
+
