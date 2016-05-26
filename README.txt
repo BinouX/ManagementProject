@@ -27,3 +27,11 @@ viewTile.js - BinouX:
 	Mise en place de l'interface avec le menu a droite
 	Mise en place d'une tile en bas a gauche pour l'heure et le budget.
 Erreur: destroy text, affichage en chaine sur la meme zone texte
+
+
+***************************************************************************
+********************************26/05/2016*********************************
+***************************************************************************
+viewTile.js - Binoux:
+	Ajout au click d'un carré blanc (taille a modifié)
+	Reglage du fond de la map
