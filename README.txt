@@ -35,3 +35,14 @@ Erreur: destroy text, affichage en chaine sur la meme zone texte
 viewTile.js - Binoux:
 	Ajout au click d'un carré blanc (taille a modifié)
 	Reglage du fond de la map
+
+***************************************************************************
+********************************29/05/2016*********************************
+***************************************************************************
+viewTile.js - Binoux:
+	Création d'un nouveau menu permettant la selection des batiments
+	Création des constructeurs permettant le futur import export
+	Création de contrainte sur les batiments (impossible de créer un batiments par dessus un autre)
+Problème:
+	Affichage du menu toujours au même endroit par rapport à la map mais les button (invisible) toujours
+		au centre de l'ecran!
