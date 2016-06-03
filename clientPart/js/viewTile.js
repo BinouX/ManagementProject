@@ -48,8 +48,7 @@ function create() {
     // Affichage de la map
     _$.map = game.add.tilemap('map_tile');
     _$.map.addTilesetImage('grass_1', 'grass');
-    _$.map.addTilesetImage('grass_1+tree', 'tree');
-    _$.map.addTilesetImage('map', 'house');
+//    _$.map.addTilesetImage('grass_1+tree', 'tree');
 
     _$.currentTile = _$.map.getTile(32, 32);
     // Affichage du fond en herbe
@@ -193,19 +192,25 @@ function create() {
 // -------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------
 
-    pause_label = game.add.text(window.innerWidth - 200, 200, 'Construction',
+
+    pause_label = game.add.text(window.innerWidth - 300, 300, 'Construction',
             {font: '24px Arial', fill: '#fff'});
     pause_label.inputEnabled = true;
     pause_label.events.onInputUp.add(function () {
         game.paused = true;
         //menu
-        menu = game.add.sprite(window.innerWidth / 2, window.innerHeight / 2, 'menu');
-        menu.fixedToCamera = true;
-        menu.anchor.setTo(0.5, 0.5);
+//        menu = game.add.sprite(window.innerWidth / 2, window.innerHeight / 2, 'menu' );
+//        menu1 = game.add.sprite(game.input.activePointer.worldX - 328, game.input.activePointer.worldY + 200, 'house', menu);
+//        menu2 = game.add.sprite(game.input.activePointer.worldX - 200, game.input.activePointer.worldY + 200, 'house', menu);
+        menu1 = game.add.sprite(game.input.activePointer.worldX / 2 - 128, window.innerHeight / 2 - 128, 'house');
+        menu2 = game.add.sprite(game.input.activePointer.worldX / 2, window.innerHeight / 2 - 128, 'road');
+        menu3 = game.add.sprite(game.input.activePointer.worldX / 2 +128, window.innerHeight / 2 - 128, 'road');
+//        menu.anchor.setTo(0.5, 0.5);
+
         game.input.onDown.add(unpause, self);
 
-        choiseLabel = game.add.text(window.innerWidth / 2, window.innerHeight - 150, 'Click outside menu to continue', {font: '30px Arial', fill: '#fff'});
-        choiseLabel.fixedToCamera = true;
+//        choiseLabel = game.add.text(window.innerWidth / 2, window.innerHeight - 150, 'Click outside menu to continue', {font: '30px Arial', fill: '#fff'});
+        choiseLabel = game.add.text(game.input.activePointer.worldX - 200, game.input.activePointer.worldY + 350, 'Click outside menu to continue', {font: '30px Arial', fill: '#fff'});
         choiseLabel.anchor.setTo(0.5, 0.5);
     });
     pause_label.fixedToCamera = true;
@@ -216,10 +221,9 @@ function create() {
         if (game.paused) {
             // Calculate the corners of the menu
             var x1 = window.innerWidth / 2 - 270 / 2;
-            var x2 = window.innerWidth / 2 + 270 / 2;
-            var y1 = window.innerHeight / 2 - 180 / 2;
-            var y2 = window.innerHeight / 2 + 180 / 2;
-
+            var x2 = window.innerWidth / 2 + 512 / 2;
+            var y1 = window.innerHeight / 2 - 256 / 2;
+            var y2 = window.innerHeight / 2 + 256 / 2;
             // Check if the click was inside the menu
             if (event.x > x1 && event.x < x2 && event.y > y1 && event.y < y2) {
                 // The choicemap is an array that will help us see which item was clicked
@@ -230,14 +234,16 @@ function create() {
                         y = event.y - y1;
 
                 // Calculate the choice 
-                var choise = Math.floor(x / 90) + 3 * Math.floor(y / 90);
+                var choise = Math.floor(x / 128) + 3 * Math.floor(y / 128);
 
                 // Display the choice
                 _$ChooseBuild.build = choisemap[choise];
                 choiseLabel.text = 'You chose menu item: ' + choisemap[choise];
             } else {
                 // Remove the menu and the label
-                menu.destroy();
+                menu1.destroy();
+                menu2.destroy();
+                menu3.destroy();
                 choiseLabel.destroy();
 
                 // Unpause the game
