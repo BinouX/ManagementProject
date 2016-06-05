@@ -3,9 +3,9 @@
 ***************************************************************************
 
 Ajout batiments - BinouX : (non fini)
-	Permet l'affichage de l'interface graphiques utilisateur.
+	Permet l'affichage de l'interface graphiques utilisateur
 	Permet de dessiner dans une div avec des couleurs differentes
-	Lits des listeners comme le clic droit et le pavé numérique comme raccourci à la couleurs.
+	Lits des listeners comme le clic droit et le pavé numérique comme raccourci à la couleurs
 ( Je suis parti sur un tuto de base pour crééer une sorte de Paint, pour pouvoir le modifié ensuite 
 en une carte avec des coordonnées)
 
@@ -25,7 +25,7 @@ viewTile.js - Binoux :
 ***************************************************************************
 viewTile.js - BinouX:
 	Mise en place de l'interface avec le menu a droite
-	Mise en place d'une tile en bas a gauche pour l'heure et le budget.
+	Mise en place d'une tile en bas a gauche pour l'heure et le budget
 Erreur: destroy text, affichage en chaine sur la meme zone texte
 
 
@@ -46,3 +46,17 @@ viewTile.js - Binoux:
 Problème:
 	Affichage du menu toujours au même endroit par rapport à la map mais les button (invisible) toujours
 		au centre de l'ecran!
+
+***************************************************************************
+********************************05/06/2016*********************************
+***************************************************************************
+viewTile.js - Binoux:
+	Ajout des données sur l'ecran de la population
+	Ajout des données sur l'ecran des impots
+	Ajout des données sur l'ecran du budget
+	Affichage du menu
+Population.js - Binoux:
+	Controle de la population avec impots
+Budget.js -Binoux
+	Controle du budget
+	

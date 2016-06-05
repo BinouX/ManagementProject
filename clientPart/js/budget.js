@@ -1,17 +1,11 @@
-  var a = 2000;
-                
-            function increase(){
+var _$Budget = function (budget) {
+    this.budget = budget;
+};
 
+function increaseBudget(x) {
+    _$Budget.budget += parseInt(x);
+}
 
-                document.getElementById("text").value=a;
-                a=a+10;
-
-            }   
-
-            function decrease(){
-
-
-                document.getElementById("text").value=a;
-                a=a-10;
-
-            }                     
+function decreaseBudget(x) {
+    _$Budget.budget -= parseInt(x);
+}                     
