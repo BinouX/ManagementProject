@@ -60,3 +60,10 @@ Population.js - Binoux:
 Budget.js -Binoux
 	Controle du budget
 	
+
+***************************************************************************
+********************************09/06/2016*********************************
+***************************************************************************
+viewTile.js - Binoux:
+	Destruction des batiments -> image detruite mais pas l'objet
+			(impossible de recreer des batiments sur les batiments destruit)

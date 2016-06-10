@@ -4,10 +4,11 @@ var _$ChooseBuild = function (build, price, population) {
     this.price = price;
     this.population = population;
 };
-var _$Construction = function (coordX, coordY, build) {
+var _$Construction = function (coordX, coordY, build, sprite) {
     this.coordX = coordX;
     this.coordY = coordY;
     this.build = build;
+    this.sprite = sprite;
 };
 var _$TabConstruction = new Array();
 
@@ -15,9 +16,11 @@ function showMenu() {
     menu1 = game.add.sprite(0, 0, 'house');
     menu2 = game.add.sprite(0, 128, 'road');
     menu3 = game.add.sprite(0, 128 * 2, 'road');
+    menu6 = game.add.sprite(0, 128 * 6, 'destroy');
     menu1.fixedToCamera = true;
     menu2.fixedToCamera = true;
     menu3.fixedToCamera = true;
+    menu6.fixedToCamera = true;
 }
 
 var game = new Phaser.Game(window.innerWidth, window.innerHeight,
@@ -32,6 +35,7 @@ function preload() {
     game.load.image('house', 'assets/tilemaps/building/house.png');
     game.load.image('road', 'assets/tilemaps/building/road.png');
 //    game.load.image('menu', 'assets/tilemaps/menu/menu.png');
+    game.load.image('destroy', 'assets/tilemaps/building/pickaxeDestroy.png');
 
 }
 
@@ -206,7 +210,7 @@ function create() {
     impot_less = game.add.text(window.innerWidth - 350, 400, '-', {font: '24px Arial', fill: '#fff'});
     impot_less.fixedToCamera = true;
     impot_less.inputEnabled = true;
-    impot_less.events.onInputUp.add(function(){
+    impot_less.events.onInputUp.add(function () {
         decreaseImpot();
     });
     impot_label = game.add.text(window.innerWidth - 300, 400, _$Population.impot, {font: '24px Arial', fill: '#fff'});
@@ -214,7 +218,7 @@ function create() {
     impot_more = game.add.text(window.innerWidth - 325, 400, '+', {font: '24px Arial', fill: '#fff'});
     impot_more.fixedToCamera = true;
     impot_more.inputEnabled = true;
-    impot_more.events.onInputUp.add(function(){
+    impot_more.events.onInputUp.add(function () {
         increaseImpot();
     });
 
@@ -248,7 +252,7 @@ function create() {
             // Clique dans le menu?
             if (event.x > x1 && event.x < x2 && event.y > y1 && event.y < y2) {
                 // Tableau de choix
-                var choisemap = ['house', 'road', 'tree', 'Other2', 'Other3', 'Other4'];
+                var choisemap = ['house', 'road', 'tree', 'Other2', 'Other3', 'Other4', 'destroy'];
 
                 // Donne le clique du menu
                 var y = event.y - y1;
@@ -266,12 +270,17 @@ function create() {
                     _$ChooseBuild.price = 10;
                     _$ChooseBuild.population = 0;
                 }
+                if (_$ChooseBuild.build == 'destroy') {
+                    _$ChooseBuild.price = 0;
+                    _$ChooseBuild.population = 0;
+                }
                 choiseLabel.text = 'You chose menu item: ' + choisemap[choise];
             } else {
                 // Suppression element du menu
                 menu1.destroy();
                 menu2.destroy();
                 menu3.destroy();
+                menu6.destroy();
                 choiseLabel.destroy();
 
                 // Unpause 
@@ -331,20 +340,33 @@ function addBuild() {
 //        map.fill(_$.currentTile, _$.layer.getTileX(_$.marker.x), _$.layer.getTileY(_$.marker.y), 8, 8, _$.layer);
 
     if (!isNaN(_$ChooseBuild.price) && ((_$Budget.budget - _$ChooseBuild.price) >= 0)) {
-        game.add.sprite(_$.layer.getTileX(_$.marker.x / 8) * 128, _$.layer.getTileY(_$.marker.y / 8) * 128, _$ChooseBuild.build);
-        coordX = _$.layer.getTileX(_$.marker.x / 8) * 128;
-        coordY = _$.layer.getTileY(_$.marker.y / 8) * 128;
-        build = _$ChooseBuild.build;
+        var sprite = game.add.sprite(_$.layer.getTileX(_$.marker.x / 8) * 128, _$.layer.getTileY(_$.marker.y / 8) * 128, _$ChooseBuild.build);
+        var coordX = _$.layer.getTileX(_$.marker.x / 8) * 128;
+        var coordY = _$.layer.getTileY(_$.marker.y / 8) * 128;
+        var build = _$ChooseBuild.build;
+        sprite.inputEnabled = true;
+        sprite.input.useHandCursor = true;
+
         if (!isNaN(_$ChooseBuild.population)) {
             increasePopulation(_$ChooseBuild.population);
-            console.log(_$Population.population);
         }
         decreaseBudget(_$ChooseBuild.price);
-        _$TabConstruction.push(new _$Construction(coordX, coordY, build));
+        _$TabConstruction.push(new _$Construction(coordX, coordY, build, sprite));
     }
-
 }
 
+function destroyBuild(tabConstru){
+     tabConstru.sprite.events.onInputDown.add(destroySprite, this);
+     delete tabConstru;
+     console.log("test"); 
+}
+
+function destroySprite(sprite) {
+//    console.log(_$TabConstruction[i]);
+    sprite.destroy();
+//    delete _$TabConstruction[i];
+//    console.log(_$TabConstruction[i]);
+}
 function updateMarker() {
     if (game.input.mousePointer.isDown)
     {
@@ -352,13 +374,20 @@ function updateMarker() {
             if ((_$TabConstruction[i].coordX == _$.layer.getTileX(_$.marker.x / 8) * 128) &&
                     (_$TabConstruction[i].coordY == _$.layer.getTileY(_$.marker.y / 8) * 128) &&
                     (typeof _$TabConstruction[i].build != 'undefined')) {
+                if (_$ChooseBuild.build == 'destroy') {
+                    destroyBuild(_$TabConstruction[i]);
+                }
                 return null;
             }
         }
-        addBuild();
+        if (_$ChooseBuild.build != 'destroy') {
+            addBuild();
+        }
     }
 
+    game.world.bringToTop(impot_less);
     game.world.bringToTop(impot_label);
+    game.world.bringToTop(impot_more);
     game.world.bringToTop(budget_label);
     game.world.bringToTop(population_label);
     game.world.bringToTop(pause_label);
@@ -377,9 +406,6 @@ function updateMenu() {
     impot_label.setText(_$Population.impot + " %");
 }
 
-function updateImpot() {
-
-}
 
 //function createTileSelector() {
 //
