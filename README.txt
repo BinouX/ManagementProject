@@ -67,3 +67,10 @@ Budget.js -Binoux
 viewTile.js - Binoux:
 	Destruction des batiments -> image detruite mais pas l'objet
 			(impossible de recreer des batiments sur les batiments destruit)
+
+
+***************************************************************************
+********************************12/06/2016*********************************
+***************************************************************************
+viewTile.js - Binoux
+	Destruction du batiments fonctionelle

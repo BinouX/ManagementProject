@@ -355,9 +355,9 @@ function addBuild() {
     }
 }
 
-function destroyBuild(tabConstru){
+function destroyBuild(tabConstru, i){
      tabConstru.sprite.events.onInputDown.add(destroySprite, this);
-     delete tabConstru;
+     _$TabConstruction.splice(i,1);
      console.log("test"); 
 }
 
@@ -375,7 +375,7 @@ function updateMarker() {
                     (_$TabConstruction[i].coordY == _$.layer.getTileY(_$.marker.y / 8) * 128) &&
                     (typeof _$TabConstruction[i].build != 'undefined')) {
                 if (_$ChooseBuild.build == 'destroy') {
-                    destroyBuild(_$TabConstruction[i]);
+                    destroyBuild(_$TabConstruction[i], i);
                 }
                 return null;
             }
