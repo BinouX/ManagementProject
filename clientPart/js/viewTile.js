@@ -1,3 +1,5 @@
+/* global choiseLabel, self, _$Population, _$Budget, Phaser, mng, _$RoadFinding, _$TabRoadInfo */
+
 var _$ = {};
 var _$ChooseBuild = function (build, price, population) {
     this.build = build;
@@ -14,8 +16,8 @@ var _$TabConstruction = new Array();
 
 function showMenu() {
     menu1 = game.add.sprite(0, 0, 'house');
-    menu2 = game.add.sprite(0, 128, 'road');
-    menu3 = game.add.sprite(0, 128 * 2, 'road');
+    menu2 = game.add.sprite(0, 128, 'road-line1');
+    menu3 = game.add.sprite(0, 128 * 2, 'road-cross');
     menu6 = game.add.sprite(0, 128 * 6, 'destroy');
     menu1.fixedToCamera = true;
     menu2.fixedToCamera = true;
@@ -31,12 +33,9 @@ function preload() {
     game.load.tilemap('map_tile', 'assets/tilemaps/maps/map_2D.json',
             null, Phaser.Tilemap.TILED_JSON);
     game.load.image('grass', 'assets/tilemaps/textures/grass_1.png');
-//    game.load.image('tree', 'assets/tilemaps/textures/grass_1tree.png');
     game.load.image('house', 'assets/tilemaps/building/house.png');
-    game.load.image('road', 'assets/tilemaps/building/road.png');
-//    game.load.image('menu', 'assets/tilemaps/menu/menu.png');
     game.load.image('destroy', 'assets/tilemaps/building/pickaxeDestroy.png');
-
+    _$RoadFinding.preloadRoad(game);
 }
 
 function render() {
@@ -252,7 +251,7 @@ function create() {
             // Clique dans le menu?
             if (event.x > x1 && event.x < x2 && event.y > y1 && event.y < y2) {
                 // Tableau de choix
-                var choisemap = ['house', 'road', 'tree', 'Other2', 'Other3', 'Other4', 'destroy'];
+                var choisemap = ['house', 'road-line1', 'tree', 'Other2', 'Other3', 'Other4', 'destroy'];
 
                 // Donne le clique du menu
                 var y = event.y - y1;
@@ -262,15 +261,15 @@ function create() {
 
                 // choix
                 _$ChooseBuild.build = choisemap[choise];
-                if (_$ChooseBuild.build == 'house') {
+                if (_$ChooseBuild.build === 'house') {
                     _$ChooseBuild.price = 100;
                     _$ChooseBuild.population = 5;
                 }
-                if (_$ChooseBuild.build == 'road') {
+                if (_$ChooseBuild.build === 'road-line1') {
                     _$ChooseBuild.price = 10;
                     _$ChooseBuild.population = 0;
                 }
-                if (_$ChooseBuild.build == 'destroy') {
+                if (_$ChooseBuild.build === 'destroy') {
                     _$ChooseBuild.price = 0;
                     _$ChooseBuild.population = 0;
                 }
@@ -306,7 +305,7 @@ function update() {
 //            _$.currentTile = _$.map.getTile(_$.layer.getTileX(_$.marker.x), _$.layer.getTileY(_$.marker.y));
 //        } else
 //        {
-        if (_$.map.getTile(_$.layer.getTileX(_$.marker.x), _$.layer.getTileY(_$.marker.y)) != _$.currentTile)
+        if (_$.map.getTile(_$.layer.getTileX(_$.marker.x), _$.layer.getTileY(_$.marker.y)) !== _$.currentTile)
         {
             _$.map.putTile(_$.currentTile, _$.layer.getTileX(_$.marker.x), _$.layer.getTileY(_$.marker.y));
         }
@@ -335,17 +334,20 @@ function update() {
 }
 
 function addBuild() {
-//        _$.map.putTile(_$.currentTile, _$.layer.getTileX(_$.marker.x), _$.layer.getTileY(_$.marker.y), _$.layer * 8);
-
-//        map.fill(_$.currentTile, _$.layer.getTileX(_$.marker.x), _$.layer.getTileY(_$.marker.y), 8, 8, _$.layer);
-
     if (!isNaN(_$ChooseBuild.price) && ((_$Budget.budget - _$ChooseBuild.price) >= 0)) {
-        var sprite = game.add.sprite(_$.layer.getTileX(_$.marker.x / 8) * 128, _$.layer.getTileY(_$.marker.y / 8) * 128, _$ChooseBuild.build);
         var coordX = _$.layer.getTileX(_$.marker.x / 8) * 128;
         var coordY = _$.layer.getTileY(_$.marker.y / 8) * 128;
+        if (_$ChooseBuild.build === 'road-line1') {
+            var spriteRoad = _$TabRoadInfo.addRoadObject(coordX, coordY, game);
+            var sprite = spriteRoad;
+        } else {
+            var sprite = game.add.sprite(_$.layer.getTileX(_$.marker.x / 8) * 128, _$.layer.getTileY(_$.marker.y / 8) * 128, _$ChooseBuild.build);
+        }
         var build = _$ChooseBuild.build;
         sprite.inputEnabled = true;
         sprite.input.useHandCursor = true;
+
+
 
         if (!isNaN(_$ChooseBuild.population)) {
             increasePopulation(_$ChooseBuild.population);
@@ -355,32 +357,30 @@ function addBuild() {
     }
 }
 
-function destroyBuild(tabConstru, i){
-     tabConstru.sprite.events.onInputDown.add(destroySprite, this);
-     _$TabConstruction.splice(i,1);
-     console.log("test"); 
+function destroyBuild(tabConstru, i) {
+    tabConstru.sprite.events.onInputDown.add(destroySprite, this);
+    delete _$TabRoadInfo.tabRoad[tabConstru.coordX / 128][tabConstru.coordY / 128];
+    _$TabConstruction.splice(i, 1);
 }
 
 function destroySprite(sprite) {
-//    console.log(_$TabConstruction[i]);
     sprite.destroy();
-//    delete _$TabConstruction[i];
-//    console.log(_$TabConstruction[i]);
 }
 function updateMarker() {
     if (game.input.mousePointer.isDown)
     {
         for (var i = 0; i < _$TabConstruction.length; i++) {
-            if ((_$TabConstruction[i].coordX == _$.layer.getTileX(_$.marker.x / 8) * 128) &&
-                    (_$TabConstruction[i].coordY == _$.layer.getTileY(_$.marker.y / 8) * 128) &&
-                    (typeof _$TabConstruction[i].build != 'undefined')) {
-                if (_$ChooseBuild.build == 'destroy') {
+            if ((_$TabConstruction[i].coordX === _$.layer.getTileX(_$.marker.x / 8) * 128) &&
+                    (_$TabConstruction[i].coordY === _$.layer.getTileY(_$.marker.y / 8) * 128) &&
+                    (typeof _$TabConstruction[i].build !== 'undefined')) {
+                if (_$ChooseBuild.build === 'destroy') {
                     destroyBuild(_$TabConstruction[i], i);
                 }
+                console.log(_$TabConstruction[i].sprite.key);
                 return null;
             }
         }
-        if (_$ChooseBuild.build != 'destroy') {
+        if (_$ChooseBuild.build !== 'destroy') {
             addBuild();
         }
     }
@@ -405,26 +405,3 @@ function updateMenu() {
     population_label.setText(_$Population.population + " Populations");
     impot_label.setText(_$Population.impot + " %");
 }
-
-
-//function createTileSelector() {
-//
-//    // creation selecteur de tile 
-//
-//    var tileSelector = game.add.group();
-////    var sprite = game.add.sprite(window.innerWidth - 200, window.innerHeight / 15, 'house');
-//    var tileSelectorBackground = game.make.graphics();
-//    tileSelectorBackground.beginFill(0x000000, 0.6);
-//    tileSelectorBackground.drawRect(window.innerWidth - 250, 0, 250, window.innerHeight);
-//    tileSelectorBackground.endFill();
-//
-//    tileSelector.add(tileSelectorBackground);
-//
-//    var tileStripHouse = tileSelector.create(window.innerWidth - 200, window.innerHeight / 15, 'house');
-//    var tileStripRoad = tileSelector.create(window.innerWidth - 200, (window.innerHeight / 15) * 4, 'road');
-//    tileStripHouse.inputEnabled = true;
-//    tileStripHouse.events.onInputDown.add(pickTile, this);
-//
-////    tileSelector.add(sprite);
-//    tileSelector.fixedToCamera = true;
-//}
