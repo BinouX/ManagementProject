@@ -4,9 +4,10 @@ var xmax = 24;
 var ymax = 24;
 
 (function () {
-    _$RoadFinding.roadInfo = function (x, y) {
+    _$RoadFinding.roadInfo = function (x, y, sprite) {
         this.posX = x;
         this.posY = y;
+        this.sprite = sprite;
     };
 
     _$RoadFinding.preloadRoad = function (game) {
@@ -25,8 +26,6 @@ var ymax = 24;
 
         game.load.image('road-cross', 'assets/tilemaps/road/road+.png');
     };
-
-
 })();
 
 (function () {
@@ -44,15 +43,17 @@ var ymax = 24;
         coordXRoad = coordX / 128;
         coordYRoad = coordY / 128;
         //Création d'un objet route pour pouvoir l'envoyer dans le tableau
-        var roadInfo = new _$RoadFinding.roadInfo(coordXRoad, coordYRoad);
+        var roadInfo = new _$RoadFinding.roadInfo(coordXRoad, coordYRoad, null);
         _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad] = roadInfo;
 
-
+        if (typeof _$TabRoadInfo.tabRoad[coordXRoad + 1][coordYRoad] !== 'undefined') {
+        }
         // Si il est entouré par 4 routes
         if (typeof _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad - 1] !== 'undefined' &&
                 typeof _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad + 1] !== 'undefined' &&
                 typeof _$TabRoadInfo.tabRoad[coordXRoad - 1][coordYRoad] !== 'undefined' &&
                 typeof _$TabRoadInfo.tabRoad[coordXRoad + 1][coordYRoad] !== 'undefined') {
+            _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad].sprite = 'road-cross';
             spriteRoadCreate = game.add.sprite(coordX, coordY, 'road-cross');
         }
         //Si il est entouré par 3 routes
@@ -60,55 +61,135 @@ var ymax = 24;
         else if (typeof _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad - 1] !== 'undefined' &&
                 typeof _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad + 1] !== 'undefined' &&
                 typeof _$TabRoadInfo.tabRoad[coordXRoad + 1][coordYRoad] !== 'undefined') {
+            _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad].sprite = 'road-inter4';
             spriteRoadCreate = game.add.sprite(coordX, coordY, 'road-inter4');
         }
         //haut-bas-gauche
         else if (typeof _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad - 1] !== 'undefined' &&
                 typeof _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad + 1] !== 'undefined' &&
                 typeof _$TabRoadInfo.tabRoad[coordXRoad - 1][coordYRoad] !== 'undefined') {
+            _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad].sprite = 'road-inter2';
             spriteRoadCreate = game.add.sprite(coordX, coordY, 'road-inter2');
         }
         //haut-gauche-droite
         else if (typeof _$TabRoadInfo.tabRoad[coordXRoad - 1][coordYRoad] !== 'undefined' &&
                 typeof _$TabRoadInfo.tabRoad[coordXRoad + 1][coordYRoad] !== 'undefined' &&
                 typeof _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad + 1] !== 'undefined') {
+            _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad].sprite = 'road-inter1';
             spriteRoadCreate = game.add.sprite(coordX, coordY, 'road-inter1');
         }
         // bas-gauche-droite
         else if (typeof _$TabRoadInfo.tabRoad[coordXRoad - 1][coordYRoad] !== 'undefined' &&
                 typeof _$TabRoadInfo.tabRoad[coordXRoad + 1][coordYRoad] !== 'undefined' &&
                 typeof _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad - 1] !== 'undefined') {
+            _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad].sprite = 'road-inter3';
             spriteRoadCreate = game.add.sprite(coordX, coordY, 'road-inter3');
         }
         // si il est entouré par 2 routes
         //haut-gauche
         else if (typeof _$TabRoadInfo.tabRoad[coordXRoad - 1][coordYRoad] !== 'undefined' &&
-                typeof _$TabRoadInfo.tabRoad[coordXRoad ][coordYRoad-1] !== 'undefined'){
+                typeof _$TabRoadInfo.tabRoad[coordXRoad ][coordYRoad - 1] !== 'undefined') {
+            _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad].sprite = 'road-bend3';
             spriteRoadCreate = game.add.sprite(coordX, coordY, 'road-bend3');
         }
         //bas-gauche
         else if (typeof _$TabRoadInfo.tabRoad[coordXRoad - 1][coordYRoad] !== 'undefined' &&
-                typeof _$TabRoadInfo.tabRoad[coordXRoad ][coordYRoad+1] !== 'undefined'){
+                typeof _$TabRoadInfo.tabRoad[coordXRoad ][coordYRoad + 1] !== 'undefined') {
+            _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad].sprite = 'road-bend2';
             spriteRoadCreate = game.add.sprite(coordX, coordY, 'road-bend2');
         }
         //haut-droite
         else if (typeof _$TabRoadInfo.tabRoad[coordXRoad + 1][coordYRoad] !== 'undefined' &&
-                typeof _$TabRoadInfo.tabRoad[coordXRoad ][coordYRoad-1] !== 'undefined'){
+                typeof _$TabRoadInfo.tabRoad[coordXRoad ][coordYRoad - 1] !== 'undefined') {
+            _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad].sprite = 'road-bend4';
             spriteRoadCreate = game.add.sprite(coordX, coordY, 'road-bend4');
         }
         //bas-droite
         else if (typeof _$TabRoadInfo.tabRoad[coordXRoad + 1][coordYRoad] !== 'undefined' &&
-                typeof _$TabRoadInfo.tabRoad[coordXRoad ][coordYRoad+1] !== 'undefined'){
+                typeof _$TabRoadInfo.tabRoad[coordXRoad ][coordYRoad + 1] !== 'undefined') {
+            _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad].sprite = 'road-bend1';
             spriteRoadCreate = game.add.sprite(coordX, coordY, 'road-bend1');
         }
         // Si il y a une route au dessus ou en dessous
         else if (typeof _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad - 1] !== 'undefined' ||
                 typeof _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad + 1] !== 'undefined') {
+            _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad].sprite = 'road-line2';
             spriteRoadCreate = game.add.sprite(coordX, coordY, 'road-line2');
-        }else{
+        } else {
+            _$TabRoadInfo.tabRoad[coordXRoad][coordYRoad].sprite = 'road-line1';
             spriteRoadCreate = game.add.sprite(coordX, coordY, 'road-line1');
         }
 
         return spriteRoadCreate;
+    };
+
+    _$TabRoadInfo.updateRoad = function (coordX, coordY) {
+        coordXRoadUpdate = coordX / 128;
+        coordYRoadUpdate = coordY / 128;
+
+        if (typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate - 1] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate + 1] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate - 1][coordYRoadUpdate] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate + 1][coordYRoadUpdate] !== 'undefined') {
+            spriteRoadUpdate = 'road-cross';
+        }
+        //Si il est entouré par 3 routes
+        //haut-bas-droite
+        else if (typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate - 1] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate + 1] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate + 1][coordYRoadUpdate] !== 'undefined') {
+            spriteRoadUpdate = 'road-inter4';
+        }
+        //haut-bas-gauche
+        else if (typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate - 1] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate + 1] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate - 1][coordYRoadUpdate] !== 'undefined') {
+            spriteRoadUpdate = 'road-inter2';
+        }
+        //haut-gauche-droite
+        else if (typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate - 1][coordYRoadUpdate] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate + 1][coordYRoadUpdate] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate + 1] !== 'undefined') {
+            spriteRoadUpdate = 'road-inter1';
+        }
+        // bas-gauche-droite
+        else if (typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate - 1][coordYRoadUpdate] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate + 1][coordYRoadUpdate] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate - 1] !== 'undefined') {
+            spriteRoadUpdate = 'road-inter3';
+        }
+        // si il est entouré par 2 routes
+        //haut-gauche
+        else if (typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate - 1][coordYRoadUpdate] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate ][coordYRoadUpdate - 1] !== 'undefined') {
+            spriteRoadUpdate = 'road-bend3';
+        }
+        //bas-gauche
+        else if (typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate - 1][coordYRoadUpdate] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate ][coordYRoadUpdate + 1] !== 'undefined') {
+            spriteRoadUpdate = 'road-bend2';
+        }
+        //haut-droite
+        else if (typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate + 1][coordYRoadUpdate] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate ][coordYRoadUpdate - 1] !== 'undefined') {
+            spriteRoadUpdate = 'road-bend4';
+        }
+        //bas-droite
+        else if (typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate + 1][coordYRoadUpdate] !== 'undefined' &&
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate ][coordYRoadUpdate + 1] !== 'undefined') {
+            spriteRoadUpdate = 'road-bend1';
+        }
+        // Si il y a une route au dessus ou en dessous
+        else if (typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate - 1] !== 'undefined' ||
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate + 1] !== 'undefined') {
+            spriteRoadUpdate = 'road-line2';
+        } else if(typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate-1][coordYRoadUpdate] !== 'undefined' ||
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate+1][coordYRoadUpdate] !== 'undefined') {
+            spriteRoadUpdate = 'road-line1';
+        }else{
+            spriteRoadUpdate = 'null';
+        }
+//        console.log(_$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate]);
+        return spriteRoadUpdate;
     };
 })();

@@ -339,6 +339,11 @@ function addBuild() {
         var coordY = _$.layer.getTileY(_$.marker.y / 8) * 128;
         if (_$ChooseBuild.build === 'road-line1') {
             var spriteRoad = _$TabRoadInfo.addRoadObject(coordX, coordY, game);
+            var gaucheRoad = _$TabRoadInfo.updateRoad((coordX), (coordY));
+            console.log(gaucheRoad);
+//            console.log("droite " + _$TabRoadInfo.updateRoad((coordX+128), (coordY)));
+//            console.log("haut " + _$TabRoadInfo.updateRoad((coordX), (coordY-128)));
+//            console.log("bas " + _$TabRoadInfo.updateRoad((coordX), (coordY+128)));
             var sprite = spriteRoad;
         } else {
             var sprite = game.add.sprite(_$.layer.getTileX(_$.marker.x / 8) * 128, _$.layer.getTileY(_$.marker.y / 8) * 128, _$ChooseBuild.build);
