@@ -333,17 +333,41 @@ function update() {
     updateMenu();
 }
 
+//modifation des routes adjacentes
+function updateAdjacentRoad(coordX, coordY) {
+
+    var rightRoad = _$TabRoadInfo.calculUpdateRoad((coordX + 128), (coordY));
+    var leftRoad = _$TabRoadInfo.calculUpdateRoad((coordX - 128), (coordY));
+    var botRoad = _$TabRoadInfo.calculUpdateRoad((coordX), (coordY + 128));
+    var topRoad = _$TabRoadInfo.calculUpdateRoad((coordX), (coordY - 128));
+
+    for (var i = 0; i < _$TabConstruction.length; i++) {
+        if (_$TabConstruction[i].coordX === coordX + 128 &&
+                _$TabConstruction[i].coordY === coordY) {
+            _$TabConstruction[i].sprite.loadTexture(rightRoad, 0);
+        }
+        if (_$TabConstruction[i].coordX === coordX - 128 &&
+                _$TabConstruction[i].coordY === coordY) {
+            _$TabConstruction[i].sprite.loadTexture(leftRoad, 0);
+        }
+        if (_$TabConstruction[i].coordX === coordX &&
+                _$TabConstruction[i].coordY === coordY + 128) {
+            _$TabConstruction[i].sprite.loadTexture(botRoad, 0);
+        }
+        if (_$TabConstruction[i].coordX === coordX &&
+                _$TabConstruction[i].coordY === coordY - 128) {
+            _$TabConstruction[i].sprite.loadTexture(topRoad, 0);
+        }
+    }
+}
+
 function addBuild() {
     if (!isNaN(_$ChooseBuild.price) && ((_$Budget.budget - _$ChooseBuild.price) >= 0)) {
         var coordX = _$.layer.getTileX(_$.marker.x / 8) * 128;
         var coordY = _$.layer.getTileY(_$.marker.y / 8) * 128;
         if (_$ChooseBuild.build === 'road-line1') {
             var spriteRoad = _$TabRoadInfo.addRoadObject(coordX, coordY, game);
-            var gaucheRoad = _$TabRoadInfo.updateRoad((coordX), (coordY));
-            console.log(gaucheRoad);
-//            console.log("droite " + _$TabRoadInfo.updateRoad((coordX+128), (coordY)));
-//            console.log("haut " + _$TabRoadInfo.updateRoad((coordX), (coordY-128)));
-//            console.log("bas " + _$TabRoadInfo.updateRoad((coordX), (coordY+128)));
+            updateAdjacentRoad(coordX, coordY);
             var sprite = spriteRoad;
         } else {
             var sprite = game.add.sprite(_$.layer.getTileX(_$.marker.x / 8) * 128, _$.layer.getTileY(_$.marker.y / 8) * 128, _$ChooseBuild.build);
@@ -351,9 +375,6 @@ function addBuild() {
         var build = _$ChooseBuild.build;
         sprite.inputEnabled = true;
         sprite.input.useHandCursor = true;
-
-
-
         if (!isNaN(_$ChooseBuild.population)) {
             increasePopulation(_$ChooseBuild.population);
         }

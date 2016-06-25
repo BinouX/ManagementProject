@@ -81,3 +81,10 @@ viewTile.js - Binoux:
 pathFindRoad.js - Binoux:
 	Ajout de l'algorithme pour afficher la bonne image
 		(Verifier les images à coté des images inséré)
+
+
+***************************************************************************
+********************************25/06/2016*********************************
+***************************************************************************
+pathFindRoad.js - Binoux:
+	Modification des routes adjacentes opérationnels

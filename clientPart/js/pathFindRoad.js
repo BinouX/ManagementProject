@@ -123,10 +123,13 @@ var ymax = 24;
         return spriteRoadCreate;
     };
 
-    _$TabRoadInfo.updateRoad = function (coordX, coordY) {
+    _$TabRoadInfo.calculUpdateRoad = function (coordX, coordY) {
         coordXRoadUpdate = coordX / 128;
         coordYRoadUpdate = coordY / 128;
+        return _$TabRoadInfo.updateRoad(coordXRoadUpdate , coordYRoadUpdate);
+    };
 
+    _$TabRoadInfo.updateRoad = function (coordXRoadUpdate, coordYRoadUpdate) {
         if (typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate - 1] !== 'undefined' &&
                 typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate + 1] !== 'undefined' &&
                 typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate - 1][coordYRoadUpdate] !== 'undefined' &&
@@ -183,13 +186,12 @@ var ymax = 24;
         else if (typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate - 1] !== 'undefined' ||
                 typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate + 1] !== 'undefined') {
             spriteRoadUpdate = 'road-line2';
-        } else if(typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate-1][coordYRoadUpdate] !== 'undefined' ||
-                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate+1][coordYRoadUpdate] !== 'undefined') {
+        } else if (typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate - 1][coordYRoadUpdate] !== 'undefined' ||
+                typeof _$TabRoadInfo.tabRoad[coordXRoadUpdate + 1][coordYRoadUpdate] !== 'undefined') {
             spriteRoadUpdate = 'road-line1';
-        }else{
+        } else {
             spriteRoadUpdate = 'null';
         }
-//        console.log(_$TabRoadInfo.tabRoad[coordXRoadUpdate][coordYRoadUpdate]);
         return spriteRoadUpdate;
     };
 })();
